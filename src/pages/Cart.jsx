@@ -128,9 +128,36 @@ const SummaryButton = styled.button`
     background-color: black;
     color: white;
 `
+const Removes = styled(Remove)`
+  cursor: pointer;
+`
+
+const Adds = styled(Add)`
+  cursor: pointer;
+`
 
 export const Cart = () => {
-  
+    const value = useContext(DataContext)
+    const [cart, setCart] = value.cart;
+    const [total, setTotal] = value.total;
+
+    // const subtract = id => {
+    //     cart.forEach(item => {
+    //         if(item.id === id){
+    //             item.amount === 1 ? item.amount = 1: item.amount -=1;
+    //         }
+    //         setCart([...cart])
+    //     });
+    // }
+    // const add = id => {
+    //     cart.forEach(item => {
+    //         if(item.id === id){
+    //             item.amount += 1;
+    //         }
+    //         setCart([cart])
+    //     });
+    // }
+
   return (
     <Container>
         <Wrapper>
@@ -144,7 +171,7 @@ export const Cart = () => {
                     </Link>
                 </TopButton>
                 <TopTexts>
-                    <TopText>Pizzas Seleccionadass(X)</TopText>
+                    <TopText>Pizzas Seleccionadass({cart.length})</TopText>
                 </TopTexts>
                 <TopButton type="filled">
                     PAGAR
@@ -152,41 +179,29 @@ export const Cart = () => {
             </Top>
             <Bottom>
                 <Info>
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_cl.jpg?alt=media&token=6a9a33da-5c00-49d4-9080-784dcc87ec2c"/>
-                            <Details>
-                                <ProductName><b>Product</b> PIZZA </ProductName>
-                                <ProductId><b>ID:</b> 203921039012 </ProductId>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductAmountContainer>
-                                <Remove />
-                                <ProductAmount>2</ProductAmount>
-                                <Add />
-                            </ProductAmountContainer>
-                            <ProductPrice>$20.000</ProductPrice>
-                        </PriceDetail>
-                    </Product>
+                    {
+                        cart.map(item => (
+                            <Product key={item.id}>
+                            <ProductDetail>
+                                <Image src={item.img}/>
+                                <Details>
+                                    <ProductName><b>Pizza : </b> {item.name} </ProductName>
+                                    <ProductId><b>ID:</b> {item.id} </ProductId>
+                                </Details>
+                            </ProductDetail>
+                            <PriceDetail>
+                                <ProductAmountContainer>
+                                    <Removes onClick={()=>subtract(item.id)}/>
+                                    <ProductAmount>{item.amount}</ProductAmount>
+                                    <Adds onClick={()=>add(item.id)}/>
+                                </ProductAmountContainer>
+                                <ProductPrice>{`$ ${item.price}`}</ProductPrice>
+                            </PriceDetail>
+                        </Product>
+                        
+                        ))
+                    }
                     <Hr />
-                    <Product>
-                        <ProductDetail>
-                            <Image src="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_cl.jpg?alt=media&token=6a9a33da-5c00-49d4-9080-784dcc87ec2c"/>
-                            <Details>
-                                <ProductName><b>Product</b> PIZZA </ProductName>
-                                <ProductId><b>ID:</b> 203921039012 </ProductId>
-                            </Details>
-                        </ProductDetail>
-                        <PriceDetail>
-                            <ProductAmountContainer>
-                                <Remove />
-                                <ProductAmount>2</ProductAmount>
-                                <Add />
-                            </ProductAmountContainer>
-                            <ProductPrice>$20.000</ProductPrice>
-                        </PriceDetail>
-                    </Product>
                 </Info>
                 <Summary>
                     <SummaryTitle>
@@ -197,7 +212,7 @@ export const Cart = () => {
                             Total
                         </SummaryItemText>
                         <SummaryItemPrice>
-                            $40.000
+                            {`$ ${total}`}
                         </SummaryItemPrice>
                     </SummaryItem>
                     <SummaryButton>PAGAR</SummaryButton>

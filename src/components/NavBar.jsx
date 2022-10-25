@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { Search, ShoppingCartOutlined } from "@material-ui/icons"
 import { Badge } from "@material-ui/core"
 import { Link } from 'react-router-dom';
+import DataContext from "../DataContext";
+import { useContext } from "react";
 
 const Container = styled.div`
     height: 60px;
@@ -53,6 +55,10 @@ const MenuItem = styled.div`
 `
 
 export const NavBar = () => {
+  const value = useContext(DataContext)
+  const [cart, setCart] = value.cart
+
+
   return (
     <Container>
     <Wrapper>
@@ -68,7 +74,7 @@ export const NavBar = () => {
         <MenuItem>Registrarse</MenuItem>  
         <MenuItem>Iniciar Sesión</MenuItem>
         <MenuItem>
-          <Badge badgeContent={0} overlap="rectangular" color="primary">
+          <Badge badgeContent={cart.length} overlap="rectangular" color="primary">
             <Link to={"/Cart"}>
               <ShoppingCartOutlined color="action" />
             </Link>

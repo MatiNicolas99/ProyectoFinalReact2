@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components"
 import DataContext from "../DataContext";
+
 import { CategoryItem } from "./CategoryItem";
 
 const Container = styled.div`
@@ -12,12 +13,16 @@ const Container = styled.div`
 
 
 export const Categories = () => {
-  const {pizzas} = useContext(DataContext);
+  const value = useContext(DataContext)
+  const products = value.product
+
+  // const {pizzas} = useContext(DataContext);
   return (
     <Container>
-        {pizzas.map(item => (
+        {products.map(item => (
             <CategoryItem key={item.id} item={item} />
         ))}
     </Container>
+
   )
 }

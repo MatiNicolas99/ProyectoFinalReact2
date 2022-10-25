@@ -93,59 +93,23 @@ const PizzaImg = styled.img`
 
 export const Product = () => {
 
-  const {pizzas, selectedPizza, setSelectedPizza, setTotalPrice, totalPrice} = useContext(DataContext);
+
+  const value = useContext(DataContext)
+  const products = value.product
   const [pizza, setPizza] = useState([]);
   let params = useParams();
 
   const selectItem = (name) => {
-    const filterProduct = pizzas.filter(pizza => pizza.name === name);
+    const filterProduct = products.filter(pizza => pizza.name === name);
     setPizza(filterProduct);
   };
 
   useEffect(() => {
     selectItem(params.productitem);
+    console.log("Pizza: ", params.productitem)
  }, [params.productitem])
   
-//  const detail = (pizzas, setTotal) => {
-//   let total = 0;
-//   let products = [];
 
-//   for (const product of pizzas){
-//     console.log("producto: ", product["id"]);
-    
-//     const productFound = products.filter((p)=>p["id"] === product["id"]);
-//     console.log(productFound);
-//     if (productFound.length === 0){
-//       const newProduct = {...product, cantidad: 1}
-//       products.push(newProduct);
-//       console.log(products);
-//     }else {
-      
-//       productFound[0].cantidad += 1;
-//       console.log(productFound);
-      
-//     }
-//     total += product.price;
-//     setTotal(total);
-//   }
-//   return {
-//     "products": products,
-//     "total": total,
-//   }
-//  };
-
-const detail = (pizzas, selectedPizza, setSelectedPizza, setTotalPrice, totalPrice) => {
-
-  let total = totalPrice;
-  setSelectedPizza([pizzas,...selectedPizza])
-  for (const p of selectedPizza) {
-    console.log(p[0].price)
-    total += p[0].price;
-    console.log(total)
-    setTotalPrice(total);
-  }
-  
-} 
 return (
     <Container>
       {pizza.map(p => (
@@ -166,7 +130,12 @@ return (
                 </Ingredients>
                 <Price>{`$${p.price}`}</Price>
                 <AddContainer>
-                  <Button onClick={() => detail(pizza, selectedPizza, setSelectedPizza, setTotalPrice, totalPrice)}>AGREGAR AL CARRITO</Button>
+                <AmountContainer>
+                  <Removes />
+                  <Amount>1</Amount>
+                  <Adds />
+                </AmountContainer>
+                  <Button>AGREGAR AL CARRITO</Button>
                 </AddContainer>
               </InfoContainer>
             </Wrapper>

@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { Add, Remove } from "@material-ui/icons";
+import DataContext from "../DataContext";
+import { useContext } from "react";
+
 
 const Container = styled.div`
     flex:1;
@@ -54,8 +56,9 @@ const Links = styled(Link)`
 `;
 
 
-
 export const CategoryItem = ({item}) => {
+    const value = useContext(DataContext)
+    const addCart = value.addCart;
 
     const navigate = useNavigate();
 
@@ -73,7 +76,10 @@ export const CategoryItem = ({item}) => {
             <Button onClick={ShowMore}>VER MÁS</Button>
         </Buttons>
         <Buttons>
-        <Button >AGREGAR</Button>
+            <Button>{`$ ${item.price}`}</Button>
+        </Buttons>
+        <Buttons>
+            <Button onClick={() => addCart(item.id)}>AGREGAR</Button>
         </Buttons>
         </Info> 
     </Container>
