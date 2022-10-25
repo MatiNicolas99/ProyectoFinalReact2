@@ -191,9 +191,9 @@ export const Cart = () => {
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
-                                    <Removes onClick={()=>subtract(item.id)}/>
-                                    <ProductAmount>{item.amount}</ProductAmount>
-                                    <Adds onClick={()=>add(item.id)}/>
+                                     <Removes /> 
+                                    <ProductAmount>1</ProductAmount>
+                                    <Adds />
                                 </ProductAmountContainer>
                                 <ProductPrice>{`$ ${item.price}`}</ProductPrice>
                             </PriceDetail>
